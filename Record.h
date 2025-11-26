@@ -13,6 +13,12 @@ struct Record {
     string major;           // major field of study
     double gpa = 0.0;       // GPA value
     bool deleted = false;   // "tombstone" flag for soft deletion
+
+//     void const print(){
+//     std::cout <<id<<", "<<last<<", "<<first<<", "<<major<<", "<<gpa<<", "<<deleted<<std::endl;
+// }
 };
+
+
 
 #endif
