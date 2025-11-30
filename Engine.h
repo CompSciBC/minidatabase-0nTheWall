@@ -31,11 +31,17 @@ struct Engine {
         heap.push_back(recIn);
         int rId = heap.size() - 1;
         idIndex.insert(recIn.id, rId);
+
         vector<int> lId;
         lId.push_back(rId);
-        lastIndex.insert(toLower(recIn.last), lId);
-
-        return heap[rId].id;//or is it just rId?
+        string lname = toLower(recIn.last);
+        auto *exists = lastIndex.find(lname);
+        if (exists) {
+            exists->push_back(rId);
+        } else {
+            lastIndex.insert(lname, lId);
+        }
+        return rId;
 
     }
 /*
@@ -117,10 +123,9 @@ delete from heap (mark deleted)like change deleted to true
         vector<const Record*> out;
         lastIndex.rangeApply(toLower(prefix), toLower(prefix) + char(127), [&](const string &k, vector<int> &rIds){
             for(int rId : rIds){
-                if(rId >= 0 && rId < (int)heap.size() && !heap[rId].deleted)
+                if(rId >= 0 && rId < (int)heap.size() && !heap[rId].deleted){
                     out.push_back(&heap[rId]);
-                    std::cout<<"Out vector thing test: "<<out[0]<<" rId = "<<rId<<std::endl;
-
+                }
             }
         });
 
